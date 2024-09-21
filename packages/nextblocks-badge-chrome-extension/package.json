@@ -1,0 +1,19 @@
+{
+  "name": "nextblocks-badge-chrome-extension",
+  "version": "1.0.0",
+  "description": "> TODO: description",
+  "author": "Arvind <arvindbr95@gmail.com>",
+  "homepage": "",
+  "license": "ISC",
+  "main": "lib/nextblocks-badge-chrome-extension.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "test": "node ./__tests__/nextblocks-badge-chrome-extension.test.js"
+  }
+}
