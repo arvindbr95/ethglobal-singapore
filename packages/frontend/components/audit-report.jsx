@@ -2,6 +2,8 @@
 import { useEffect, useState } from 'react'
 import { CheckCircle, XCircle } from 'lucide-react';
 import { useSearchParams } from 'next/navigation'
+import Image from 'next/image'; // Import Image component from Next.js
+import logo from './logo.jpg';
 
 export function AuditReport() {
   const [report, setReport] = useState(null)
@@ -71,7 +73,10 @@ export function AuditReport() {
 
   return (
     (<div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">Smart Contract Audit Report</h1>
+        <div className="flex items-center mb-6">
+        <Image src={logo} alt="Logo" width={150} height={50} className="mr-4" /> 
+      <h1 className="text-3xl font-bold mb-6 pt-6 pl-6">Smart Contract Audit Report</h1>
+      </div>
       <div className="bg-white shadow-lg rounded-lg p-6 mb-8">
         <h2 className="text-2xl font-semibold mb-4">{contract.name}</h2>
         <p className="text-gray-600 mb-4">Audit Date: {contract.auditDate}</p>
