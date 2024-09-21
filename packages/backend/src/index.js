@@ -2,6 +2,7 @@
 
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 
 const app = express();
 const port = 3001;
@@ -9,6 +10,11 @@ const port = 3001;
 // Middleware for parsing JSON bodies
 app.use(express.json());
 
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+  })
+);
 // MongoDB connection
 mongoose
   .connect("mongodb://localhost:27017/lerna-backend", {

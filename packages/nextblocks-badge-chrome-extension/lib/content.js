@@ -25,7 +25,10 @@ function addButton(contractAddress, isVerified) {
         `;
 
     newButton.onclick = () => {
-      window.open(`https://example.com/${contractAddress}`, "_blank"); // Replace with the URL you want to open
+      window.open(
+        `http://localhost:3000?smartContractId=${contractAddress}`,
+        "_blank"
+      ); // Replace with the URL you want to open
     };
   } else {
     // add code here
@@ -44,11 +47,10 @@ function addButton(contractAddress, isVerified) {
   // Step 3: Append the new button to the container
   flexContainer.appendChild(newButton);
 }
-
-// Function to extract contract address from the URL
 function getContractAddress() {
   const url = window.location.href;
-  const contractAddress = url.split("/").pop();
+  const addressPart = url.split("/address/")[1]; // Get the part after "/address/"
+  const contractAddress = addressPart ? addressPart.split("?")[0] : null; // Split to remove the query parameters
   return contractAddress;
 }
 
