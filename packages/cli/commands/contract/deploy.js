@@ -67,21 +67,39 @@ const askOverrideContract = async function (prevCodeHash) {
     return true;
 };
 
-function animateEllipsis(startText) {
-    const ellipsisStates = ["", ".", "..", "..."]; // The different states of the ellipsis
-    let currentStateIndex = 0;
+function animateEllipsis() {
+    const steps = [
+        "💭 Analyzing your contract",
+        "🔍 Testing against common attack vectors and developer errors",
+        "📝 Preparing report",
+    ];
+    const ellipsisStates = ["", ".", "..", "..."]; // The ellipsis states
+    let currentStepIndex = 0;
+    let currentEllipsisIndex = 0;
 
     const interval = setInterval(() => {
-        // Print the current ellipsis state
+        // Print the current step with the ellipsis
         process.stdout.write(
-            `\r${startText}${ellipsisStates[currentStateIndex]}`
+            `\r${steps[currentStepIndex]}${ellipsisStates[currentEllipsisIndex]}`
         );
 
-        // Move to the next state
-        currentStateIndex = (currentStateIndex + 1) % ellipsisStates.length;
-    }, 500); // Update every 500ms
+        // Update the ellipsis
+        currentEllipsisIndex =
+            (currentEllipsisIndex + 1) % ellipsisStates.length;
 
-    return interval; // Return the interval ID so you can clear it later
+        // After every 4 ellipsis updates (1000ms), move to the next step
+        if (currentEllipsisIndex === 0 && currentStepIndex < 2) {
+            process.stdout.write(`\n`);
+            currentStepIndex += 1;
+        }
+
+        // If we've gone through all the steps, clear the interval
+        // if (currentStepIndex === steps.length) {
+        //     clearInterval(interval);
+        // }
+    }, 300); // Ellipsis updates every 250ms, 4 cycles = 1000ms
+
+    return interval; // Return the interval ID to clear it later if needed
 }
 
 async function deploy(options) {
@@ -114,7 +132,7 @@ async function deploy(options) {
         // console.log("code", code);
         // console.log("toml", toml);
 
-        const loadingAnimation = animateEllipsis(`💭 Analyzing your contract`); // Start the animation
+        const loadingAnimation = animateEllipsis(); // Start the animation
 
         //check contract
         const checkoutput = await handleCheck(code, toml);
