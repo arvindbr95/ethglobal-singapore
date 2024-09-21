@@ -1,0 +1,1 @@
+/Users/arvindbr95/Documents/code/ai/ethglobal-singapore/packages/contracts/contract_with_unsafe_cross_contract_error/target/debug/libcontract_with_unsafe_cross_contract_error.dylib: /Users/arvindbr95/Documents/code/ai/ethglobal-singapore/packages/contracts/contract_with_unsafe_cross_contract_error/src/lib.rs

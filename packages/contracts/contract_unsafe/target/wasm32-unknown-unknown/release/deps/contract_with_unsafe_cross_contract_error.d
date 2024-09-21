@@ -1,0 +1,8 @@
+/Users/arvindbr95/Documents/code/ai/ethglobal-singapore/packages/contracts/contract_with_unsafe_cross_contract_error/target/wasm32-unknown-unknown/release/deps/contract_with_unsafe_cross_contract_error.wasm: src/lib.rs /Users/arvindbr95/Documents/code/ai/ethglobal-singapore/packages/contracts/contract_with_unsafe_cross_contract_error/target/near/contract_with_unsafe_cross_contract_error_abi.zst
+
+/Users/arvindbr95/Documents/code/ai/ethglobal-singapore/packages/contracts/contract_with_unsafe_cross_contract_error/target/wasm32-unknown-unknown/release/deps/libcontract_with_unsafe_cross_contract_error.rlib: src/lib.rs /Users/arvindbr95/Documents/code/ai/ethglobal-singapore/packages/contracts/contract_with_unsafe_cross_contract_error/target/near/contract_with_unsafe_cross_contract_error_abi.zst
+
+/Users/arvindbr95/Documents/code/ai/ethglobal-singapore/packages/contracts/contract_with_unsafe_cross_contract_error/target/wasm32-unknown-unknown/release/deps/contract_with_unsafe_cross_contract_error.d: src/lib.rs /Users/arvindbr95/Documents/code/ai/ethglobal-singapore/packages/contracts/contract_with_unsafe_cross_contract_error/target/near/contract_with_unsafe_cross_contract_error_abi.zst
+
+src/lib.rs:
+/Users/arvindbr95/Documents/code/ai/ethglobal-singapore/packages/contracts/contract_with_unsafe_cross_contract_error/target/near/contract_with_unsafe_cross_contract_error_abi.zst:
