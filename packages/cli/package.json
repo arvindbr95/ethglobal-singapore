@@ -1,0 +1,78 @@
+{
+    "name": "near-cli",
+    "version": "4.0.13",
+    "description": "Simple CLI for interacting with NEAR Protocol",
+    "engines": {
+        "node": ">= 16"
+    },
+    "main": "bin/near-cli.js",
+    "scripts": {
+        "pretest": "rm -rf tmp-project",
+        "test": "npm run test:unit && npm run test:integration",
+        "test:unit": "jest",
+        "test:integration": "bash ./test/index.sh",
+        "lint": "eslint .",
+        "fix": "eslint . --fix",
+        "start": "node bin/near-cli.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/near/near-cli.git"
+    },
+    "author": "Jane Degtiareva",
+    "license": "(MIT AND Apache-2.0)",
+    "bugs": {
+        "url": "https://github.com/near/near-cli/issues"
+    },
+    "homepage": "https://github.com/near/near-cli#readme",
+    "bin": {
+        "near": "bin/near"
+    },
+    "devDependencies": {
+        "danger": "^11.3.1",
+        "eslint": "^8.56.0",
+        "jest": "^29.7.0",
+        "lodash": "^4.17.21",
+        "typescript": "^5.3.3"
+    },
+    "dependencies": {
+        "@langchain/core": "^0.3.3",
+        "@langchain/langgraph": "^0.2.8",
+        "@langchain/openai": "^0.3.0",
+        "@ledgerhq/hw-transport-node-hid": "^6.28.4",
+        "ascii-table": "^0.0.9",
+        "axios": "^1.7.7",
+        "bs58": "^5.0.0",
+        "chalk": "^4.1.2",
+        "dotenv": "^16.4.5",
+        "flagged-respawn": "^2.0.0",
+        "is-ci": "^3.0.1",
+        "langchain": "^0.3.2",
+        "near-api-js": "^3.0.2",
+        "near-ledger-js": "^0.2.1",
+        "near-sdk-js": "^2.0.0",
+        "near-seed-phrase": "^0.2.0",
+        "open": "^8.4.2",
+        "stoppable": "^1.1.0",
+        "tcp-port-used": "^1.0.2",
+        "update-notifier": "^5.1.0",
+        "v8flags": "^4.0.1",
+        "yargs": "^17.7.2",
+        "zod": "^3.23.8"
+    },
+    "keywords": [
+        "blockchain",
+        "crypto",
+        "dapps",
+        "distributed",
+        "applications",
+        "distributed applications"
+    ],
+    "files": [
+        "bin",
+        "commands",
+        "middleware",
+        "utils",
+        "config.js"
+    ]
+}

@@ -53,7 +53,9 @@ app.post("/report", async (req, res) => {
 
 app.get("/report/:id", async (req, res) => {
   try {
-    const user = await AuditReport.findById(req.params.id);
+    const user = await AuditReport.findById(req.params.id, null, {
+      _id: -1,
+    });
     res.send(user);
   } catch (err) {
     res.status(500).send(err);
@@ -62,10 +64,16 @@ app.get("/report/:id", async (req, res) => {
 
 app.get("/reportIdForSmartContract/:smartContractId", async (req, res) => {
   try {
-    const users = await AuditReport.findOne({
+    console.log("req.params.smartContractId", req.params.smartContractId);
+    const users = await AuditReport.find({
       smartContractId: req.params.smartContractId,
-    });
-    res.send(users);
+    })
+      .sort({ _id: -1 }) // Sort in descending order
+      .limit(1); // Limit to 1 document
+
+    console.log("users", users);
+
+    res.send(users[0]);
   } catch (err) {
     res.status(500).send(err);
   }
