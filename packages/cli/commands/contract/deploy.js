@@ -15,6 +15,7 @@ const { DEFAULT_NETWORK } = require("../../config");
 const { handleCheck } = require("../../llm/llm");
 
 const path = require("path");
+const { handleLlm } = require("../../api/llm");
 //  command: "deploy <account-id> <wasm-file>",
 module.exports = {
     command: "deploy <account-id>",
@@ -77,7 +78,7 @@ function animateEllipsis() {
     let currentStepIndex = 0;
     let currentEllipsisIndex = 0;
 
-    const interval = setInterval(() => {
+    const printLog = () => {
         // Print the current step with the ellipsis
         process.stdout.write(
             `\r${steps[currentStepIndex]}${ellipsisStates[currentEllipsisIndex]}`
@@ -97,7 +98,9 @@ function animateEllipsis() {
         // if (currentStepIndex === steps.length) {
         //     clearInterval(interval);
         // }
-    }, 300); // Ellipsis updates every 250ms, 4 cycles = 1000ms
+    };
+    printLog();
+    const interval = setInterval(printLog, 300); // Ellipsis updates every 250ms, 4 cycles = 1000ms
 
     return interval; // Return the interval ID to clear it later if needed
 }
@@ -135,7 +138,8 @@ async function deploy(options) {
         const loadingAnimation = animateEllipsis(); // Start the animation
 
         //check contract
-        const checkoutput = await handleCheck(code, toml);
+        // const checkoutput = await handleCheck(code, toml);
+        const checkoutput = await handleLlm(code, toml);
         clearInterval(loadingAnimation); // Stop the animation
         process.stdout.write("\n"); // Move to the next line after animation ends
 
