@@ -67,6 +67,23 @@ const askOverrideContract = async function (prevCodeHash) {
     return true;
 };
 
+function animateEllipsis(startText) {
+    const ellipsisStates = ["", ".", "..", "..."]; // The different states of the ellipsis
+    let currentStateIndex = 0;
+
+    const interval = setInterval(() => {
+        // Print the current ellipsis state
+        process.stdout.write(
+            `\r${startText}${ellipsisStates[currentStateIndex]}`
+        );
+
+        // Move to the next state
+        currentStateIndex = (currentStateIndex + 1) % ellipsisStates.length;
+    }, 500); // Update every 500ms
+
+    return interval; // Return the interval ID so you can clear it later
+}
+
 async function deploy(options) {
     // console.log("options.keyStore,", options.keyStore);
     await assertCredentials(
@@ -97,8 +114,13 @@ async function deploy(options) {
         // console.log("code", code);
         // console.log("toml", toml);
 
+        const loadingAnimation = animateEllipsis(`💭 Analyzing your contract`); // Start the animation
+
         //check contract
         const checkoutput = await handleCheck(code, toml);
+        clearInterval(loadingAnimation); // Stop the animation
+        process.stdout.write("\n"); // Move to the next line after animation ends
+
         const totalChecks = Object.values(checkoutput.contract.criteria).reduce(
             (acc, curr) => acc + Object.keys(curr).length - 2,
             0
@@ -126,13 +148,17 @@ async function deploy(options) {
         );
         if (hasErrors) {
             console.log(
-                `Your contract contains ${
+                `❗️ Your contract contains ${
                     totalChecks - passedChecks
                 } issues. Please refer to http://localhost:3000/?smartContractId=${
                     options.accountId
                 } and rectify them before deploying.`
             );
             process.exit(1);
+        } else {
+            console.log(
+                `✅ Your contract contains no issues. Please refer to http://localhost:3000/?smartContractId=${options.accountId} for a detailed report.`
+            );
         }
         await runBuild(options.contractCodeFolder);
     }
@@ -198,9 +224,12 @@ async function deploy(options) {
 // Function to run the build command
 const runBuild = async (codePath) => {
     // console.log("codepath", codePath);
+    // const loadingAnimation = animateEllipsis(`🚀 Performing deployment`); // Start the animation
     const output = await execAsync(
         `cd ${codePath} && cargo near build --no-docker`
     );
+    // clearInterval(loadingAnimation); // Stop the animation
+
     // console.log("output", output);
     return output;
 };

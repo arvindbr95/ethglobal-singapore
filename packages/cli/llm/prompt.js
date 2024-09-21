@@ -120,8 +120,8 @@ When a new message comes in, NEAR will check if example.near has enough balance 
 Note that this can create an attack surface. If sending data to your guest book is inexpensive to the user while costing the contract owner significantly more, a malicious user can exploit the imbalance to make maintaining the contract prohibitively expensive.
 One possible way to tackle this problem is asking the user to attach money to the call to cover the storage used by their message.
 
-\n\n- Output in the following format {format_instructions}
-
+\n\n- IMPORTANT. especially focus on callbacks and reentrancy errors if state or rollbacks is not correctly managed. For example if .then() function is missing.
+\n\n- IMPORTANT. in codeFixes section in the response ONLY output code not text. The user should be able to copy paste the code into their contract to fix the issue.
 `;
 };
 
