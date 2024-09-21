@@ -24,13 +24,13 @@ require("dotenv").config();
 
 const openAIApiKey = process.env.OPENAIKEY;
 
-console.log("openAIApiKey", openAIApiKey);
+// console.log("openAIApiKey", openAIApiKey);
 
 const { getSystemPrompt } = require("./prompt");
 
 const handleCheck = async (code, toml) => {
     try {
-        console.log("Handle regenerate general start", new Date());
+        // console.log("Handle regenerate general start", new Date());
 
         const llm = new ChatOpenAI({
             modelName: "gpt-4o",
@@ -181,11 +181,6 @@ const handleCheck = async (code, toml) => {
                                 ),
                         }),
                     }),
-                    summary: z.object({
-                        totalIssues: z.number(),
-                        criticalIssues: z.number(),
-                        warnings: z.number(),
-                    }),
                 }),
             })
         );
@@ -211,7 +206,7 @@ const handleCheck = async (code, toml) => {
             format_instructions: parser.getFormatInstructions(),
         });
 
-        console.log("result", result);
+        // console.log("result", result);
 
         return result;
     } catch (error) {

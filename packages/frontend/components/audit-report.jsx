@@ -84,19 +84,9 @@ export function AuditReport() {
             <p className="text-lg font-semibold">Passed Checks</p>
             <p className="text-3xl font-bold">{passedChecks}</p>
           </div>
-          <div className="bg-yellow-100 p-4 rounded-lg">
-            <p className="text-lg font-semibold">Issues Found</p>
-            <p className="text-3xl font-bold">{contract.summary.totalIssues}</p>
-          </div>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="bg-red-100 p-4 rounded-lg">
-            <p className="text-lg font-semibold">Critical Issues</p>
-            <p className="text-3xl font-bold">{contract.summary.criticalIssues}</p>
-          </div>
-          <div className="bg-orange-100 p-4 rounded-lg">
-            <p className="text-lg font-semibold">Warnings</p>
-            <p className="text-3xl font-bold">{contract.summary.warnings}</p>
+            <p className="text-lg font-semibold">Issues Found</p>
+            <p className="text-3xl font-bold">{totalChecks - passedChecks}</p>
           </div>
         </div>
       </div>

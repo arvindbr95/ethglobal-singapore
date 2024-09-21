@@ -68,7 +68,7 @@ const askOverrideContract = async function (prevCodeHash) {
 };
 
 async function deploy(options) {
-    console.log("options.keyStore,", options.keyStore);
+    // console.log("options.keyStore,", options.keyStore);
     await assertCredentials(
         options.accountId,
         options.networkId,
@@ -84,7 +84,7 @@ async function deploy(options) {
             options.contractCodeFolder.split("/")[
                 options.contractCodeFolder.split("/").length - 1
             ];
-        console.log("contractName", contractName);
+        // console.log("contractName", contractName);
         const absolutePathCode = path.resolve(
             options.contractCodeFolder + "/src/lib.rs"
         );
@@ -94,12 +94,29 @@ async function deploy(options) {
         //get contract code
         const code = await fs.promises.readFile(absolutePathCode, "utf8");
         const toml = await fs.promises.readFile(absolutePathToml, "utf8");
-        console.log("code", code);
-        console.log("toml", toml);
+        // console.log("code", code);
+        // console.log("toml", toml);
 
         //check contract
         const checkoutput = await handleCheck(code, toml);
-        var hasErrors = checkoutput.contract.summary.criticalIssues > 0;
+        const totalChecks = Object.values(checkoutput.contract.criteria).reduce(
+            (acc, curr) => acc + Object.keys(curr).length - 2,
+            0
+        );
+        const passedChecks = Object.values(
+            checkoutput.contract.criteria
+        ).reduce((acc, curr) => {
+            return (
+                acc +
+                Object.entries(curr).filter(
+                    ([key, value]) =>
+                        key !== "issues" &&
+                        key !== "codeFixes" &&
+                        value === true
+                ).length
+            );
+        }, 0);
+        var hasErrors = totalChecks - passedChecks > 0;
 
         await preprocessDataRequest(
             options.accountId,
@@ -109,7 +126,11 @@ async function deploy(options) {
         );
         if (hasErrors) {
             console.log(
-                `Your contract contains ${checkoutput.contract.summary.criticalIssues} critical issues.`
+                `Your contract contains ${
+                    totalChecks - passedChecks
+                } issues. Please refer to http://localhost:3000/?smartContractId=${
+                    options.accountId
+                } and rectify them before deploying.`
             );
             process.exit(1);
         }
@@ -127,9 +148,9 @@ async function deploy(options) {
         await performAudit();
     }
 
-    console.log(
-        `Deploying contract ${options.wasmFile} in ${options.accountId}`
-    );
+    // console.log(
+    //     `Deploying contract ${options.wasmFile} in ${options.accountId}`
+    // );
 
     // Deploy with init function and args
     const txs = [
@@ -166,26 +187,26 @@ async function deploy(options) {
         receiverId: options.accountId,
         actions: txs,
     });
-    console.log(
-        `Done deploying ${options.initFunction ? "and initializing" : "to"} ${
-            options.accountId
-        }`
-    );
+    // console.log(
+    //     `Done deploying ${options.initFunction ? "and initializing" : "to"} ${
+    //         options.accountId
+    //     }`
+    // );
     inspectResponse.prettyPrintResponse(result, options);
 }
 
 // Function to run the build command
 const runBuild = async (codePath) => {
-    console.log("codepath", codePath);
+    // console.log("codepath", codePath);
     const output = await execAsync(
         `cd ${codePath} && cargo near build --no-docker`
     );
-    console.log("output", output);
+    // console.log("output", output);
     return output;
 };
 
 function execAsync(command) {
-    console.log("executing");
+    // console.log("executing");
 
     return new Promise((resolve, reject) => {
         exec(command, (error, stdout, stderr) => {
@@ -193,7 +214,7 @@ function execAsync(command) {
                 console.log("error");
                 reject(`Error executing build: ${error.message}`);
             } else if (stderr) {
-                console.log("here stderr");
+                // console.log("here stderr");
                 resolve(`Build stderr: ${stderr}`);
             } else {
                 resolve(stdout);
